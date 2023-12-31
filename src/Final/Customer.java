@@ -31,9 +31,13 @@ public class Customer extends User implements Search{
     }
     ///////////////////////////////
     public void showCart(){
+        if (cart.isEmpty()){
+            System.out.println("Empty Cart");
+        }
+        else {
         for(int i=0;i<cart.size();i++){
             System.out.println("Product "+i+" ["+cart.get(i).toString()+" ]");
-        }
+        }}
     }
     ///////////////////////////////////////////////////////
     public void addToCart() {
@@ -53,6 +57,28 @@ public class Customer extends User implements Search{
                 }
             }
         }
+    }
+    //////////////////////////////////////
+    public void removeFromCart(){
+        int i=0;
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Reference of product you want to remove from your cart");
+        int reference=scanner.nextInt();
+        if (cart.isEmpty()){
+            System.out.println("Empty Cart");
+        }
+        else{
+            while (i<cart.size()){
+                if (cart.get(i).getReference()==reference){
+                    cart.remove(cart.get(i));
+                    System.out.println("Product Removed");
+                    break;
+                }
+                i++;
+            }
+
+        }
+
     }
     //////////////////////////////////////////////////////
     public void searching(){
@@ -77,6 +103,10 @@ public class Customer extends User implements Search{
         System.out.println("Reference Of The Product You Want To Order");
         int reference = scanner.nextInt();
         Order order = new Order(this, reference);
+        if (cart.isEmpty()){
+            System.out.println("Empty Cart");
+        }
+        else {
         for (int j = 0; j < cart.size(); j++) {
             if (cart.get(j).getReference() == reference) {
                 OrderHistory.addOrder(order);
@@ -84,11 +114,12 @@ public class Customer extends User implements Search{
                 System.out.println("Credit Card :");
                 int credit_card= scanner.nextInt();
                 System.out.println("Expiration Date");
+                scanner.nextLine();
                 String date=scanner.nextLine();
                 System.out.println("Discount code");
                 String discount_code=scanner.nextLine();
                 if (cart.get(j).getDiscount_code().equals(discount_code)){
-                    int price= (int) (cart.get(j).getPrice()-cart.get(j).getPrice()*0.5);
+                    int price= (int) (cart.get(j).getPrice()-cart.get(j).getPrice()*0.2);
                     System.out.println("You got a discount !Payment Done only with price :"+price);
                 }
                 else {
@@ -98,7 +129,7 @@ public class Customer extends User implements Search{
 
 
             }
-        }
+        }}
 
 
     }
@@ -143,7 +174,8 @@ public class Customer extends User implements Search{
             System.out.println("To Search Specific Products Press 4");
             System.out.println("To Pass An Order Press 5");
             System.out.println("To Rate A Product Press 6");
-            System.out.println("To Quit userMenu Press 7");
+            System.out.println("To Remove A Product from cart Press 7");
+            System.out.println("To Quit customerMenu Press 8");
             int key=Sc.nextInt();
             if (key==1){
                 this.showProductList();
@@ -164,6 +196,9 @@ public class Customer extends User implements Search{
                 this.rateProduct();
             }
             else if (key==7){
+                this.removeFromCart();
+            }
+            else if (key==8){
                 break;
             }
 

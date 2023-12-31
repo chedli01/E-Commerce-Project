@@ -3,7 +3,7 @@ package Final;
 import java.util.ArrayList;
 
 public class AdminList {
-    static ArrayList<Admin> admins=new ArrayList<>();;
+    static ArrayList<Admin> admins=new ArrayList<>();
 
     public static void showAdmins(){
         for (int i=0;i<admins.size();i++){
